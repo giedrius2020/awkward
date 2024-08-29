@@ -207,6 +207,8 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
             count=real_length,
             byteorder=byteorder,
         )
+        print(f"[ak] DEBUG data _from_buffer: {data}")
+
         if form.inner_shape != ():
             data = backend.nplike.reshape(data, (length, *form.inner_shape))
 
