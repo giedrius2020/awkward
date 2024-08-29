@@ -196,10 +196,14 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
         raw_array = container[getkey(form, "data")]
         print(f"[ak] DEBUG type of raw array of data: {type(raw_array)}")
         print(f"[ak] DEBUG raw array of data (first 10 elements): {raw_array[:10]}")
-        print(f"[ak] DEBUG len(raw_array): {len(raw_array)}")
+
 
         real_length = length * math.prod(form.inner_shape)
         print(f"[ak] DEBUG real_length: {real_length}")
+        print(f"[ak] DEBUG len(raw_array): {len(raw_array)}")
+        print(f"[ak] DEBUG length arg: {length}")
+
+
 
 
         data = _from_buffer(
