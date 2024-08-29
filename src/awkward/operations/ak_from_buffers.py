@@ -195,7 +195,7 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
         dtype = ak.types.numpytype.primitive_to_dtype(form.primitive)
         raw_array = container[getkey(form, "data")]
         print(f"[ak] DEBUG type of raw array of data: {type(raw_array)}")
-        print(f"[ak] DEBUG raw array of data (first 10 elements): {raw_array[:10]}")
+        print(f"[ak] DEBUG raw_array of data: {raw_array}")
 
 
         real_length = length * math.prod(form.inner_shape)
@@ -379,7 +379,7 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
 
     elif isinstance(form, ak.forms.ListOffsetForm):
         raw_array = container[getkey(form, "offsets")]
-        print(f"[ak] DEBUG raw array: {raw_array}")
+        print(f"[ak] DEBUG offsets raw_array: {raw_array}")
         offsets = _from_buffer(
             backend.index_nplike,
             raw_array,
@@ -394,7 +394,6 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
         else:
             next_length = 0 if len(offsets) == 1 else offsets[-1]
         print(f"[ak] DEBUG next_length: {next_length}")
-        print(f"[ak] DEBUG form.content type: {type(form.content)}")
 
         content = _reconstitute(
             form.content, next_length, container, getkey, backend, byteorder, simplify
