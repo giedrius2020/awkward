@@ -149,6 +149,7 @@ def _impl(
 
     out = _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
 
+    print(f"[ak] DEBUG _impl wrap_layout: {wrap_layout(out, highlevel=highlevel, attrs=attrs, behavior=behavior)}")
     return wrap_layout(out, highlevel=highlevel, attrs=attrs, behavior=behavior)
 
 
