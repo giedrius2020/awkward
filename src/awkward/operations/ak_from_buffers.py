@@ -195,7 +195,7 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
         dtype = ak.types.numpytype.primitive_to_dtype(form.primitive)
         raw_array = container[getkey(form, "data")]
         print(f"[ak] DEBUG type of raw array of data: {type(raw_array)}")
-        print(f"[ak] DEBUG raw array of data: {raw_array}")
+        print(f"[ak] DEBUG raw array of data (first 10 elements): {raw_array[:10]}")
         real_length = length * math.prod(form.inner_shape)
         print(f"[ak] DEBUG real_length: {real_length}")
         print(f"[ak] DEBUG dtype: {dtype}")
