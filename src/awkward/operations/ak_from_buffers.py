@@ -397,6 +397,8 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
             form.content, next_length, container, getkey, backend, byteorder, simplify
         )
         print(f"[ak] DEBUG content: {content}")
+        print(f"[ak] DEBUG return ak.contents.ListOffsetArray: "
+              f"{ak.contents.ListOffsetArray(ak.index.Index(offsets),content,parameters=form._parameters,)}")
 
         return ak.contents.ListOffsetArray(
             ak.index.Index(offsets),
@@ -423,6 +425,9 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
             )
             for content in form.contents
         ]
+        print(f"[ak] DEBUG return ak.contents.RecordArray: "
+              f"{ak.contents.RecordArray(contents,None if form.is_tuple else form.fields,length,parameters=form._parameters,)}")
+
         return ak.contents.RecordArray(
             contents,
             None if form.is_tuple else form.fields,
