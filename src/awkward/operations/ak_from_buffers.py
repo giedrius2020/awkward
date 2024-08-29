@@ -194,7 +194,12 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
     elif isinstance(form, ak.forms.NumpyForm):
         dtype = ak.types.numpytype.primitive_to_dtype(form.primitive)
         raw_array = container[getkey(form, "data")]
+        print(f"[ak] DEBUG raw array of data: {raw_array}")
         real_length = length * math.prod(form.inner_shape)
+        print(f"[ak] DEBUG real_length: {real_length}")
+        print(f"[ak] DEBUG dtype: {dtype}")
+
+
         data = _from_buffer(
             backend.nplike,
             raw_array,
