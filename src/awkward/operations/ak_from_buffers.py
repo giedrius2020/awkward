@@ -206,7 +206,9 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
             backend.nplike,
             raw_array,
             dtype=dtype,
-            count=real_length,
+            count=len(raw_array), # TODO: just for testing
+
+            # count=real_length,
             byteorder=byteorder,
         )
         print(f"[ak] DEBUG data _from_buffer: {data}")
