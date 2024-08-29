@@ -211,7 +211,9 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
 
         if form.inner_shape != ():
             data = backend.nplike.reshape(data, (length, *form.inner_shape))
+            print(f"[ak] DEBUG data _from_buffer after reshape: {data}")
 
+        print(f"[ak] DEBUG data final return: {ak.contents.NumpyArray(data, parameters=form._parameters, backend=backend)}")
         return ak.contents.NumpyArray(
             data, parameters=form._parameters, backend=backend
         )
