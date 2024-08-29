@@ -194,14 +194,7 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
     elif isinstance(form, ak.forms.NumpyForm):
         dtype = ak.types.numpytype.primitive_to_dtype(form.primitive)
         raw_array = container[getkey(form, "data")]
-        print(f"[ak] DEBUG type of raw array of data: {type(raw_array)}")
-        print(f"[ak] DEBUG raw_array of data: {raw_array}")
-
-
         real_length = length * math.prod(form.inner_shape)
-        print(f"[ak] DEBUG real_length: {real_length}")
-        print(f"[ak] DEBUG len(raw_array): {len(raw_array)}")
-        print(f"[ak] DEBUG length arg: {length}")
 
         data = _from_buffer(
             backend.nplike,
@@ -210,13 +203,10 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
             count=real_length,
             byteorder=byteorder,
         )
-        print(f"[ak] DEBUG data _from_buffer: {data}")
 
         if form.inner_shape != ():
             data = backend.nplike.reshape(data, (length, *form.inner_shape))
-            print(f"[ak] DEBUG data _from_buffer after reshape: {data}")
 
-        print(f"[ak] DEBUG data final return: {ak.contents.NumpyArray(data, parameters=form._parameters, backend=backend)}")
         return ak.contents.NumpyArray(
             data, parameters=form._parameters, backend=backend
         )
@@ -379,7 +369,6 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
 
     elif isinstance(form, ak.forms.ListOffsetForm):
         raw_array = container[getkey(form, "offsets")]
-        print(f"[ak] DEBUG offsets raw_array: {raw_array}")
         offsets = _from_buffer(
             backend.index_nplike,
             raw_array,
@@ -387,19 +376,15 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
             count=length + 1,
             byteorder=byteorder,
         )
-        print(f"[ak] DEBUG offsets: {offsets}")
 
         if isinstance(offsets, PlaceholderArray):
             next_length = unknown_length
         else:
             next_length = 0 if len(offsets) == 1 else offsets[-1]
-        print(f"[ak] DEBUG next_length: {next_length}")
 
         content = _reconstitute(
             form.content, next_length, container, getkey, backend, byteorder, simplify
         )
-        print(f"[ak] DEBUG return ak.contents.ListOffsetArray: "
-              f"{ak.contents.ListOffsetArray(ak.index.Index(offsets),content,parameters=form._parameters,)}")
 
         return ak.contents.ListOffsetArray(
             ak.index.Index(offsets),
@@ -426,8 +411,6 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
             )
             for content in form.contents
         ]
-        print(f"[ak] DEBUG return ak.contents.RecordArray: "
-              f"{ak.contents.RecordArray(contents,None if form.is_tuple else form.fields,length,parameters=form._parameters,)}")
 
         return ak.contents.RecordArray(
             contents,
