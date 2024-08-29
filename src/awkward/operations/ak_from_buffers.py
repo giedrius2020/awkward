@@ -382,6 +382,8 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
         else:
             next_length = 0 if len(offsets) == 1 else offsets[-1]
         print(f"[ak] DEBUG next_length: {next_length}")
+        print(f"[ak] DEBUG form.content type: {type(form.content)}")
+
         content = _reconstitute(
             form.content, next_length, container, getkey, backend, byteorder, simplify
         )
