@@ -367,6 +367,7 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
 
     elif isinstance(form, ak.forms.ListOffsetForm):
         raw_array = container[getkey(form, "offsets")]
+        print(f"[ak] DEBUG raw array: {raw_array}")
         offsets = _from_buffer(
             backend.index_nplike,
             raw_array,
@@ -374,11 +375,13 @@ def _reconstitute(form, length, container, getkey, backend, byteorder, simplify)
             count=length + 1,
             byteorder=byteorder,
         )
+        print(f"[ak] DEBUG offsets: {offsets}")
 
         if isinstance(offsets, PlaceholderArray):
             next_length = unknown_length
         else:
             next_length = 0 if len(offsets) == 1 else offsets[-1]
+        print(f"[ak] DEBUG next_length: {next_length}")
         content = _reconstitute(
             form.content, next_length, container, getkey, backend, byteorder, simplify
         )
